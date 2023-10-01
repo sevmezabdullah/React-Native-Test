@@ -2,8 +2,8 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 
 
-type Product = {
-    id: number,
+export type Product = {
+    id?: number,
     name: string | null,
     price: number | 0,
     category: string | null,

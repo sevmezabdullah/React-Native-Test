@@ -3,6 +3,7 @@ import { setupListeners } from '@reduxjs/toolkit/query';
 
 import logger from 'redux-logger';
 import storage from 'redux-persist/lib/storage'
+import FilesystemStorage from 'redux-persist-filesystem-storage';
 import thunk from 'redux-thunk';
 import { postApi } from '../redux/api/posts';
 import products from '../redux/reducer/products';
@@ -17,17 +18,24 @@ import {
     REGISTER,
 
 } from 'redux-persist'
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+
 
 
 
 
 const persistConfig = {
     key: 'root',
-    storage,
+    storage: AsyncStorage,
+
+
+
 }
 const rootReducer = combineReducers({
     products: products,
     [postApi.reducerPath]: postApi.reducer,
+
 })
 
 
@@ -41,8 +49,9 @@ const store = configureStore({
         serializableCheck: {
             ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
         },
-    }).concat(thunk, logger, postApi.middleware),
+    }).concat(thunk, postApi.middleware),
 })
+
 export const persistor = persistStore(store)
 export type AppDispatch = typeof store.dispatch
 export type RootState = ReturnType<typeof store.getState>

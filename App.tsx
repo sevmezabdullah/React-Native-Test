@@ -4,7 +4,10 @@ import { Provider } from 'react-redux'
 import store, { persistor } from './src/app/store';
 import { PersistGate } from 'redux-persist/integration/react';
 import Home from './src/pages/Home';
+
+
 const App = () => {
+
   return (
     <Provider store={store}>
       <PersistGate persistor={persistor}>
